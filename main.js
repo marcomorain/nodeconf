@@ -1,42 +1,21 @@
-var five = require("johnny-five"),
-    board, ping;
+/* jslint node: true */
+'use strict';
+var _ = require('underscore');
+var five = require('johnny-five');
+var board = new five.Board();
 
-board = new five.Board();
+board.on('ready', function() {
+  console.log('ready');
 
-board.on("ready", function() {
+  // Create a standard `led` hardware instance
+  var yellow = new five.Led({ pin: 13 });
+  var red    = new five.Led({ pin: 12 });
+  var ping   = new five.Ping(3);
 
-  // Create a new `ping` hardware instance.
-  ping = new five.Ping(3);
+  var wait = 2e3;
 
-  // Properties
-
-  // ping.microseconds
-  //
-  // Roundtrip distance in microseconds
-  //
-
-  // ping.inches
-  //
-  // Calculated distance to object in inches
-  //
-
-  // ping.cm
-  //
-  // Calculated distance to object in centimeters
-  //
-
-
-  // Ping Event API
-
-  // "data" get the current reading from the ping
-  ping.on("data", function( err, value ) {
-    console.log( "data", value );
-  });
-
-  ping.on("change", function( err, value ) {
-
-    console.log( typeof ping.inches );
+  ping.on('change', function(err, value) {
     console.log( ping.inches );
-    console.log( "Object is " + ping.inches + " inches away" );
   });
+  
 });
